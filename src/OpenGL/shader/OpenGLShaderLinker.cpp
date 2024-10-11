@@ -1,4 +1,4 @@
-#include "../../include/shader/shaderLinker.h"
+#include "../../../include/OpenGL/shader/OpenGLShaderLinker.h"
 
 // This links all compiled shader modules together
 unsigned int linkShader(const std::string &vertexFilepath, const std::string &fragmentFilepath){

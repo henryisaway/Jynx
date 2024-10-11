@@ -29,10 +29,10 @@ add_executable(Jynx
             src/core/config.cpp
             src/main.cpp
             dependencies/glad/src/glad.c
-            src/events/inputHandler.cpp
-            src/shader/shaderLinker.cpp
-            src/factory/factory.cpp
-            src/core/app.cpp
+            src/OpenGL/events/OpenGLInputHandler.cpp
+            src/OpenGL/shader/OpenGLShaderLinker.cpp
+            src/OpenGL/factory/OpenGLPrimitives.cpp
+            src/OpenGL/OpenGLRenderer.cpp
             )
 
 # Link libraries

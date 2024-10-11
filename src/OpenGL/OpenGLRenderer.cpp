@@ -1,15 +1,15 @@
-#include "../../include/renderer/OpenGL.h"
+#include "../../../include/OpenGL/OpenGLRenderer.h"
 
-App::App(){
+OpenGLRenderer::OpenGLRenderer(){
 	setupGLFW();
 	makeSystems(m_window);
 }
 
-App::~App(){
+OpenGLRenderer::~OpenGLRenderer(){
 	glfwTerminate();
 }
 
-void App::run(){
+void OpenGLRenderer::run(){
 	setupOpenGL();
 
 	if(DEBUG_MODE){
@@ -21,11 +21,11 @@ void App::run(){
 		std::cout << "Shader ID: " << m_shader << "\n";
 	}
 
-	primitiveModels->makeTriangle();
+	primitiveShapes->makeTriangle();
 
 	while(!glfwWindowShouldClose(m_window)){
 		glClear(GL_COLOR_BUFFER_BIT);
-		primitiveModels->draw(m_shader);
+		primitiveShapes->draw(m_shader);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}
@@ -33,7 +33,7 @@ void App::run(){
 	if(DEBUG_MODE) std::cout << "Program finished." << std::endl;
 }
 
-void App::setupGLFW(){
+void OpenGLRenderer::setupGLFW(){
 	if(DEBUG_MODE) std::cout << "Setting up GLFW...\n";
 	if(!glfwInit()){
 		std::cerr << "Failed to initialise GLFW." << std::endl;
@@ -42,6 +42,9 @@ void App::setupGLFW(){
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	#endif
 
 	m_window = glfwCreateWindow(m_width, m_height, "Jynx", NULL, NULL);
 	if(m_window == NULL){
@@ -58,7 +61,7 @@ void App::setupGLFW(){
 		exit(-1);
 	}
 
-	// Sets the App instance as the window user pointer
+	// Sets the OpenGLRenderer instance as the window user pointer
 	// Needed for the framebuffer size callback to work
 	glfwSetWindowUserPointer(m_window, this); 
 	glViewport(0, 0, m_width, m_height);
@@ -66,7 +69,7 @@ void App::setupGLFW(){
 	if(DEBUG_MODE) std::cout << "GLFW is ready!\n";
 }
 
-void App::setupOpenGL(){
+void OpenGLRenderer::setupOpenGL(){
 	if(DEBUG_MODE) std::cout << "Setting up OpenGL...\n";
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	
@@ -77,24 +80,24 @@ void App::setupOpenGL(){
 	if(DEBUG_MODE) std::cout << "OpenGL is ready!\n";
 
 	m_shader = linkShader(
-		"../shaders/vertex.glsl",
-		"../shaders/fragment.glsl");
+		"../shaders/OpenGL/vertex.glsl",
+		"../shaders/OpenGL/fragment.glsl");
 
 	glUseProgram(m_shader);
 }
 
-void App::framebufferSizeCallback(GLFWwindow* window, int width, int height){
-	App* app = static_cast<App*>(glfwGetWindowUserPointer(window));
+void OpenGLRenderer::framebufferSizeCallback(GLFWwindow* window, int width, int height){
+	OpenGLRenderer* app = static_cast<OpenGLRenderer*>(glfwGetWindowUserPointer(window));
 	if(app){
 		app->onFramebufferSizeChange(width, height);
 	}
 }
 
-void App::onFramebufferSizeChange(int width, int height){
+void OpenGLRenderer::onFramebufferSizeChange(int width, int height){
 	glViewport(0, 0, width, height);
 }
 
-void App::makeSystems(GLFWwindow* window){
+void OpenGLRenderer::makeSystems(GLFWwindow* window){
 	keyboardHandler = std::make_unique<KeyboardHandler>(window);
-	primitiveModels = std::make_unique<PrimitiveModels>();
+	primitiveShapes = std::make_unique<PrimitiveShapes>();
 }
