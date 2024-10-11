@@ -1,6 +1,6 @@
-#include "../../include/factory/factory.h"
+#include "../../../include/OpenGL/factory/OpenGLPrimitives.h"
 
-unsigned int PrimitiveModels::makeTriangle(){
+unsigned int PrimitiveShapes::makeTriangle(){
 	float vertices[] = {
 	-0.5f, -0.5f, 0.0f,
 	 0.5f, -0.5f, 0.0f,
@@ -23,7 +23,7 @@ unsigned int PrimitiveModels::makeTriangle(){
 	return m_VAO;
 }
 
-void PrimitiveModels::draw(unsigned int shader){
+void PrimitiveShapes::draw(unsigned int shader){
 	glUseProgram(shader);
 	glBindVertexArray(m_VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);

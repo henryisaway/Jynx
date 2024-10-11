@@ -1,7 +1,7 @@
 #pragma once
-#include "../core/config.h"
+#include "../../core/config.h"
 
-class PrimitiveModels{
+class PrimitiveShapes{
 public:
 	unsigned int makeTriangle();		// Creates triangle mesh on the middle of the screen;
 	void draw(unsigned int shader);

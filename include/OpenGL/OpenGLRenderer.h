@@ -1,14 +1,15 @@
 #pragma once
-#include "../config.h"
-#include "../events/inputHandler.h"
-#include "../shaders/shaderapps.h"
-#include "../factory/factory.h"
+#include "../core/app.h"
+#include "../core/config.h"
+#include "events/OpenGLInputHandler.h"
+#include "shader/OpenGLShaderLinker.h"
+#include "factory/OpenGLPrimitives.h"
 
-class App{
+class OpenGLRenderer : public App{
 public:
-	App();
-	~App();
-	void run();
+	OpenGLRenderer();
+	~OpenGLRenderer();
+	void run() override;
 
 private:
 	const size_t m_width = 800;
@@ -26,5 +27,5 @@ private:
 
 	// Systems
 	std::unique_ptr<KeyboardHandler> keyboardHandler;
-	std::unique_ptr<PrimitiveModels> primitiveModels;
+	std::unique_ptr<PrimitiveShapes> primitiveShapes;
 };
