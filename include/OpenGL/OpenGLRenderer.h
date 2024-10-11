@@ -1,14 +1,15 @@
 #pragma once
-#include "../core/app.h"
 #include "../core/config.h"
+#include "../core/renderer/renderer.h"
+#include "factory/OpenGLMesh.h"
 #include "events/OpenGLInputHandler.h"
 #include "shader/OpenGLShaderLinker.h"
-#include "factory/OpenGLPrimitives.h"
 
-class OpenGLRenderer : public App{
+class OpenGLRenderer : public Renderer{
 public:
 	OpenGLRenderer();
 	~OpenGLRenderer();
+	void draw(const Mesh& mesh) override;
 	void run() override;
 
 private:
@@ -20,9 +21,11 @@ private:
 	void onFramebufferSizeChange(int width, int height);
 	void makeSystems(GLFWwindow* window);
 
+	// Buffers
+	std::vector<OpenGLMesh> m_Meshes;
+
 	GLFWwindow* m_window;
 
 	// Systems
 	std::unique_ptr<KeyboardHandler> keyboardHandler;
-	std::unique_ptr<PrimitiveShapes> primitiveShapes;
 };

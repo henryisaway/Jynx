@@ -9,6 +9,19 @@ OpenGLRenderer::~OpenGLRenderer(){
 	glfwTerminate();
 }
 
+void OpenGLRenderer::draw(const Mesh& mesh){
+	const OpenGLMesh& openglMesh = dynamic_cast<const OpenGLMesh&>(mesh);
+	const std::vector<unsigned int>& VAOs = openglMesh.getVAOs();
+	const unsigned int EBO = openglMesh.getEBO();
+
+	for(const auto& VAO : VAOs){
+		glBindVertexArray(VAO);
+
+		if(EBO) glDrawElements(GL_TRIANGLES, openglMesh.getIndices().size(), GL_UNSIGNED_INT, 0);
+		else glDrawArrays(GL_TRIANGLES, 0, openglMesh.getVertices().size() / 3);
+	}
+}
+
 void OpenGLRenderer::run(){
 	setupOpenGL();
 
@@ -21,11 +34,9 @@ void OpenGLRenderer::run(){
 		std::cout << "Shader ID: " << m_shader << "\n";
 	}
 
-	primitiveShapes->makeTriangle();
-
 	while(!glfwWindowShouldClose(m_window)){
 		glClear(GL_COLOR_BUFFER_BIT);
-		primitiveShapes->draw(m_shader);
+		for(const auto& mesh : m_Meshes) draw(mesh);
 		glfwSwapBuffers(m_window);
 		glfwPollEvents();
 	}
@@ -43,7 +54,7 @@ void OpenGLRenderer::setupGLFW(){
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	#endif
 
 	m_window = glfwCreateWindow(m_width, m_height, "Jynx", NULL, NULL);
@@ -99,5 +110,4 @@ void OpenGLRenderer::onFramebufferSizeChange(int width, int height){
 
 void OpenGLRenderer::makeSystems(GLFWwindow* window){
 	keyboardHandler = std::make_unique<KeyboardHandler>(window);
-	primitiveShapes = std::make_unique<PrimitiveShapes>();
 }

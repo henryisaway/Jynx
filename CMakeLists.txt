@@ -27,11 +27,12 @@ include_directories(${GLM_ROOT}/include)
 add_executable(Jynx
             include/core/config.h
             src/core/config.cpp
+            src/core/app.cpp
             src/main.cpp
             dependencies/glad/src/glad.c
             src/OpenGL/events/OpenGLInputHandler.cpp
             src/OpenGL/shader/OpenGLShaderLinker.cpp
-            src/OpenGL/factory/OpenGLPrimitives.cpp
+            src/OpenGL/factory/OpenGLMesh.cpp
             src/OpenGL/OpenGLRenderer.cpp
             )
 

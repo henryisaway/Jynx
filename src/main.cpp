@@ -13,10 +13,11 @@
 //limitations under the License.
 
 #include "../include/core/config.h"
-#include "../include/OpenGL/OpenGLRenderer.h"
+#include "../include/core/app.h"
 
 int main(){
-	std::unique_ptr<App> app = std::make_unique<OpenGLRenderer>();
-	app->run();
+	//std::unique_ptr<App> app = std::make_unique<App>();
+	App app;
+	app.run();
 	return 0;
 }
