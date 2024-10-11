@@ -12,9 +12,6 @@ public:
 	void run() override;
 
 private:
-	const size_t m_width = 800;
-	const size_t m_height = 600;
-
 	unsigned int m_shader;
 
 	void setupGLFW();
