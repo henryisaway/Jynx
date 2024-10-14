@@ -33,7 +33,7 @@ add_executable(Jynx
             src/OpenGL/events/OpenGLInputHandler.cpp
             src/OpenGL/shader/OpenGLShaderLinker.cpp
             src/OpenGL/factory/OpenGLMesh.cpp
-            src/OpenGL/OpenGLRenderer.cpp
+            src/OpenGL/OpenGLRenderContext.cpp
             )
 
 # Link libraries

@@ -1,15 +1,15 @@
-#include "../../../include/OpenGL/OpenGLRenderer.h"
+#include "../../../include/OpenGL/OpenGLRenderContext.h"
 
-OpenGLRenderer::OpenGLRenderer(){
-	setupGLFW();
+OpenGLRenderContext::OpenGLRenderContext(const size_t m_width, const size_t m_height){
+	setupGLFW(m_width, m_height);
 	makeSystems(m_window);
 }
 
-OpenGLRenderer::~OpenGLRenderer(){
+OpenGLRenderContext::~OpenGLRenderContext(){
 	glfwTerminate();
 }
 
-void OpenGLRenderer::draw(const Mesh& mesh){
+void OpenGLRenderContext::draw(const Mesh& mesh){
 	const OpenGLMesh& openglMesh = dynamic_cast<const OpenGLMesh&>(mesh);
 	const std::vector<unsigned int>& VAOs = openglMesh.getVAOs();
 	const unsigned int EBO = openglMesh.getEBO();
@@ -22,7 +22,7 @@ void OpenGLRenderer::draw(const Mesh& mesh){
 	}
 }
 
-void OpenGLRenderer::run(){
+void OpenGLRenderContext::run(){
 	setupOpenGL();
 
 	if(DEBUG_MODE){
@@ -44,7 +44,7 @@ void OpenGLRenderer::run(){
 	if(DEBUG_MODE) std::cout << "Program finished." << std::endl;
 }
 
-void OpenGLRenderer::setupGLFW(){
+void OpenGLRenderContext::setupGLFW(const size_t m_width, const size_t m_height){
 	if(DEBUG_MODE) std::cout << "Setting up GLFW...\n";
 	if(!glfwInit()){
 		std::cerr << "Failed to initialise GLFW." << std::endl;
@@ -72,7 +72,7 @@ void OpenGLRenderer::setupGLFW(){
 		exit(-1);
 	}
 
-	// Sets the OpenGLRenderer instance as the window user pointer
+	// Sets the OpenGLRenderContext instance as the window user pointer
 	// Needed for the framebuffer size callback to work
 	glfwSetWindowUserPointer(m_window, this); 
 	glViewport(0, 0, m_width, m_height);
@@ -80,7 +80,7 @@ void OpenGLRenderer::setupGLFW(){
 	if(DEBUG_MODE) std::cout << "GLFW is ready!\n";
 }
 
-void OpenGLRenderer::setupOpenGL(){
+void OpenGLRenderContext::setupOpenGL(){
 	if(DEBUG_MODE) std::cout << "Setting up OpenGL...\n";
 	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	
@@ -97,17 +97,17 @@ void OpenGLRenderer::setupOpenGL(){
 	glUseProgram(m_shader);
 }
 
-void OpenGLRenderer::framebufferSizeCallback(GLFWwindow* window, int width, int height){
-	OpenGLRenderer* app = static_cast<OpenGLRenderer*>(glfwGetWindowUserPointer(window));
+void OpenGLRenderContext::framebufferSizeCallback(GLFWwindow* window, int width, int height){
+	OpenGLRenderContext* app = static_cast<OpenGLRenderContext*>(glfwGetWindowUserPointer(window));
 	if(app){
 		app->onFramebufferSizeChange(width, height);
 	}
 }
 
-void OpenGLRenderer::onFramebufferSizeChange(int width, int height){
+void OpenGLRenderContext::onFramebufferSizeChange(int width, int height){
 	glViewport(0, 0, width, height);
 }
 
-void OpenGLRenderer::makeSystems(GLFWwindow* window){
+void OpenGLRenderContext::makeSystems(GLFWwindow* window){
 	keyboardHandler = std::make_unique<KeyboardHandler>(window);
 }

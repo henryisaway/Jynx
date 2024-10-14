@@ -1,9 +1,9 @@
 #include "../../include/core/app.h"
 
 App::App(){
-	renderer = std::make_unique<OpenGLRenderer>();
+	context = std::make_unique<OpenGLRenderContext>(m_width, m_height);
 }
 
 void App::run(){
-	renderer->run();
+	context->run();
 }

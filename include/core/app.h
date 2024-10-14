@@ -1,6 +1,6 @@
 #pragma once
 #include "config.h"
-#include "../OpenGL/OpenGLRenderer.h"
+#include "../OpenGL/OpenGLRenderContext.h"
 
 class App{
 public:
@@ -8,5 +8,7 @@ public:
 	void run();
 
 private:
-	std::unique_ptr<Renderer> renderer;
+	std::unique_ptr<Context> context;
+	const size_t m_width = 800;
+	const size_t m_height = 600;
 };

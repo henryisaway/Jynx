@@ -16,7 +16,6 @@
 #include "../include/core/app.h"
 
 int main(){
-	//std::unique_ptr<App> app = std::make_unique<App>();
 	App app;
 	app.run();
 	return 0;

@@ -1,21 +1,21 @@
 #pragma once
 #include "../core/config.h"
-#include "../core/renderer/renderer.h"
+#include "../core/renderer/context.h"
 #include "factory/OpenGLMesh.h"
 #include "events/OpenGLInputHandler.h"
 #include "shader/OpenGLShaderLinker.h"
 
-class OpenGLRenderer : public Renderer{
+class OpenGLRenderContext : public Context{
 public:
-	OpenGLRenderer();
-	~OpenGLRenderer();
+	OpenGLRenderContext(const size_t m_width, const size_t m_height);
+	~OpenGLRenderContext();
 	void draw(const Mesh& mesh) override;
 	void run() override;
 
 private:
 	unsigned int m_shader;
 
-	void setupGLFW();
+	void setupGLFW(const size_t m_width, const size_t m_height);
 	void setupOpenGL();
 	static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 	void onFramebufferSizeChange(int width, int height);
