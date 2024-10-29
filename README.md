@@ -9,7 +9,6 @@ Jynx is a custom general-purpose 2D/3D graphics engine designed for flexibility,
 - **Lightweight**: Good for fast rendering and efficient resource management.
 - **Flexible API**: A high-level Lua interface allows for easier scripting and rapid iteration.
 - **Mod-Friendly Architecture**: Designed to facilitate modding in games, ensuring ease of use for both developers and end-users.
-- **Multi-Platform Support**: Initially implemented on OpenGL, with plans for support across multiple graphical APIs.
 - **Asset Management**: Future features include a comprehensive asset manager to streamline asset handling.
 - **Support for 2D and 3D Rendering**: Capable of rendering both 2D and 3D graphics.
 - **Custom Shaders**: Create stunning visuals with the ability to implement custom shaders.
@@ -66,7 +65,7 @@ For inquiries or support, feel free to reach out:
 Please note that these are not hard deadlines. Features may be implemented ahead of time or after the ETA.
 ### Q4 2024: Return of Development & New Features
 - **Restructuring of the codebase**
-  - Better implementation of the ECS architecture and better abstractions.
+  - Better implementation of the ECS architecture and organisation of the project.
 - **Basic 3D Rendering**
   - Achieve basic 3D rendering capabilities; support for imported 3D models and built-in primitive models.
 - **Basic 2D Rendering**
@@ -99,5 +98,3 @@ Please note that these are not hard deadlines. Features may be implemented ahead
 ### Q4 2025 and Beyond
 - **Advanced Features**
   - Introduce advanced rendering techniques (e.g., post-processing, lighting models).
-- **Additional Graphics API Support**
-  - (May not happen) Research and implement Vulkan support for a high-performance mode.
